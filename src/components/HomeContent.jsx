@@ -139,11 +139,10 @@ export default function HomeContent() {
     }
 
     // [TUNING] Tightened for better flow
-    const maxScroll = 1000; 
-
+    const maxScroll = 600; // [REDUCED] Faster transition past intro
     const handleWheel = (e) => {
       accumulatedScrollRef.current = Math.max(0, Math.min(maxScroll, 
-        accumulatedScrollRef.current + e.deltaY * 0.55
+        accumulatedScrollRef.current + e.deltaY * 0.75
       ));
       
       const progress = accumulatedScrollRef.current / maxScroll;
@@ -165,7 +164,7 @@ export default function HomeContent() {
     const handleTouchMove = (e) => {
       const deltaY = touchStartY - e.touches[0].clientY;
       accumulatedScrollRef.current = Math.max(0, Math.min(maxScroll, 
-        accumulatedScrollRef.current + deltaY * 1.5
+        accumulatedScrollRef.current + deltaY * 1.8
       ));
       touchStartY = e.touches[0].clientY;
       
@@ -220,9 +219,8 @@ export default function HomeContent() {
   // ============================================================
   // Phase 1 (0-0.3): Orb to center, hi-text fades
   // Phase 2 (0.3-0.45): Holographic reveal appears
-  // Phase 3 (0.45-0.65): Plateau (Readable Dwell) - NARROWED
-  // Phase 4 (0.65-1.0): Transition to space
-
+  // Phase 3 (0.45-0.6): Plateau (Readable Dwell) - SHORTENED
+  // Phase 4 (0.6-1.0): Transition to space
   // Orb Position: Curves to center, then stays for plateau
   const orbX = scrollProgress < 0.3
     ? 35 - (scrollProgress / 0.3) * 35 
@@ -230,15 +228,15 @@ export default function HomeContent() {
 
   const orbY = scrollProgress < 0.45
     ? 0
-    : scrollProgress < 0.65
+    : scrollProgress < 0.6
       ? -35 // Stays up during plateau
-      : -35 - ((scrollProgress - 0.65) / 0.35) * 150; // Final move up
+    : -35 - ((scrollProgress - 0.6) / 0.4) * 150; // Final move up
 
   const orbScale = scrollProgress < 0.3
     ? 0.8 + (scrollProgress / 0.3) * 0.4
-    : scrollProgress < 0.65
-      ? 1.2
-      : 1.2 - ((scrollProgress - 0.65) / 0.35) * 0.5;
+    : scrollProgress < 0.6
+    ? 1.2
+    : 1.2 - ((scrollProgress - 0.6) / 0.4) * 0.5;
 
   // Texts
   const initialTextOpacity = Math.max(0, 1 - scrollProgress * 3);
@@ -247,17 +245,17 @@ export default function HomeContent() {
     ? 0
     : scrollProgress < 0.45
       ? (scrollProgress - 0.3) / 0.15
-      : scrollProgress < 0.65
+    : scrollProgress < 0.6
         ? 1
-        : Math.max(0, 1 - ((scrollProgress - 0.65) / 0.15));
+        : Math.max(0, 1 - ((scrollProgress - 0.6) / 0.2));
 
   const introY = scrollProgress < 0.3
     ? 40
     : scrollProgress < 0.45
       ? 40 - ((scrollProgress - 0.3) / 0.15) * 40
-      : scrollProgress < 0.65
+      : scrollProgress < 0.6
         ? 0
-        : -((scrollProgress - 0.65) / 0.35) * 150;
+        : -((scrollProgress - 0.6) / 0.4) * 150;
 
   // Container transition
   const containerY = scrollProgress > 0.8 

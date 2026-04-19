@@ -174,7 +174,7 @@ function CameraController() {
         x: px,
         y: py,
         z: targetZ,
-        duration: 1.2,
+        duration: 0.8,
         ease: "power2.out",
         onStart: () => {
           setIsTransitioning(true)
@@ -198,7 +198,7 @@ function CameraController() {
         x: 0,
         y: 0,
         z: targetZ,
-        duration: 1.2,
+        duration: 0.8,
         ease: "power2.out",
         onComplete: () => {
           setIsTransitioning(false)

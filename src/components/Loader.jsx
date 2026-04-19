@@ -51,7 +51,7 @@ export default function Loader() {
 
   useEffect(() => {
     if (progress === 100) {
-      setTimeout(() => setShow(false), 1200)
+      setTimeout(() => setShow(false), 600)
     }
   }, [progress])
 

@@ -199,7 +199,7 @@ const CommandConsole = ({ goHome, isMobile }) => {
       display: 'flex',
       flexDirection: 'column',
       gap: isMobile ? '18px' : '22px',
-      pointerEvents: 'auto',
+      pointerEvents: 'none',
       overflow: 'hidden'
     }}>
       {/* 1. Holographic Texture Overlays */}
@@ -347,7 +347,8 @@ const CommandConsole = ({ goHome, isMobile }) => {
             justifyContent: 'center',
             gap: '12px',
             transition: 'all 0.3s ease',
-            boxShadow: '0 0 20px rgba(136, 204, 255, 0.1)'
+            boxShadow: '0 0 20px rgba(136, 204, 255, 0.1)',
+            pointerEvents: 'auto'
           }}
         >
           {/* Animated Glow Backing */}
